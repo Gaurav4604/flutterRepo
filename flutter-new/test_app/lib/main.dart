@@ -93,9 +93,7 @@ class MyApp extends StatelessWidget {
         title: "First Layout!",
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          body: ListView(
             children: [
               Image.asset("images/lake.jpg", fit: BoxFit.fill),
               titleRow,
