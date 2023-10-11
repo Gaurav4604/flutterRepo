@@ -50,7 +50,7 @@ class LayoutScreen extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.w700),
             ),
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
             ),
             const Text(
               "Kandersteg, Switzerland",
