@@ -1,38 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/adjustable_list.dart';
+import 'package:test_app/complex_lists.dart';
 import 'package:test_app/layout_screen.dart';
 import 'package:test_app/lists_and_grid_screen.dart';
 
+class Route {
+  final Widget page;
+  final String pageDisplayName;
+
+  Route(this.page, this.pageDisplayName);
+
+  Widget renderRouteToPage(BuildContext context) {
+    return TextButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => page));
+        },
+        child: Text(pageDisplayName));
+  }
+}
+
 class RoutesScreen extends StatelessWidget {
-  const RoutesScreen({super.key});
+  RoutesScreen({super.key});
+
+  final items = [
+    Route(LayoutScreen(), "Layout Screen"),
+    Route(const ListsAndGridScreen(), "Lists and Grid 1"),
+    Route(ComplexLists(), "Lists and Grid 2"),
+    Route(AdjustableList(), "Lists and Grid 3"),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LayoutScreen()));
-                  },
-                  child: const Text("Layout Screen")),
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ListsAndGridScreen()));
-                  },
-                  child: const Text("Lists and Grid Screen"))
-            ],
-          )
-        ],
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return items[index].renderRouteToPage(context);
+        },
+        itemCount: items.length,
       ),
     );
   }
