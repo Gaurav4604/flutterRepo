@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         "/layout": (context) => LayoutScreen(),
         "/lists-and-grids-1": (context) => const ListsAndGridScreen(),
         "/lists-and-grids-2": (context) => ComplexLists(),
-        "/lists-and-grids-3": (context) => AdjustableList()
+        "/lists-and-grids-3": (context) => const AdjustableList()
       },
       // home: HomeScreen()
     );
