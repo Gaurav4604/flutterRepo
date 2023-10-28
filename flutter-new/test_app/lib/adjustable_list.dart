@@ -11,6 +11,7 @@ class AdjustableList extends StatelessWidget {
         return const SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text("Hi 1"),
               Text("Hi 2"),
