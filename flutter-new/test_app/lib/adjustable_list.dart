@@ -8,16 +8,20 @@ class AdjustableList extends StatelessWidget {
     return Scaffold(
       // required when a widget needs to be based off the Device layout
       body: LayoutBuilder(builder: (context, constraints) {
-        return const SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text("Hi 1"),
-              Text("Hi 2"),
-              Text("Hi 3"),
-            ],
-          ),
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+              ),
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text("Hi 1"),
+                  Text("Hi 2"),
+                  Text("Hi 3"),
+                ],
+              )),
         );
       }),
     );
