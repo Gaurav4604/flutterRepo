@@ -22,7 +22,9 @@ class AdjustableList extends StatelessWidget {
                   // Spacer(
                   //   flex: 1,
                   // ),
-                  ItemWidget(content: "hello there")
+                  ItemWidget(content: "hello there"),
+                  ItemWidget(content: "hello there"),
+                  ItemWidget(content: "hello there"),
                 ],
               )),
         );
@@ -45,6 +47,7 @@ class ItemWidget extends StatelessWidget {
           ),
           child: Container(
             height: 50,
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             alignment: Alignment.center,
             decoration: const BoxDecoration(
                 color: Colors.blueAccent,
