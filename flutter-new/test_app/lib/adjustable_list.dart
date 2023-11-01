@@ -12,20 +12,12 @@ class AdjustableList extends StatelessWidget {
           child: ConstrainedBox(
               constraints: BoxConstraints(
                 minHeight: constraints.maxHeight,
-                // minWidth: constraints.maxWidth,
               ),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Hi 1"),
-                  // Spacer(
-                  //   flex: 1,
-                  // ),
-                  ItemWidget(content: "hello there"),
-                  ItemWidget(content: "hello there"),
-                  ItemWidget(content: "hello there"),
-                ],
+                children: List.generate(
+                    4, (index) => ItemWidget(content: "Item $index")),
               )),
         );
       }),
@@ -41,13 +33,10 @@ class ItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: constraints.maxWidth,
-          ),
+        return SizedBox(
           child: Container(
-            height: 50,
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            height: 100,
+            margin: const EdgeInsets.symmetric(horizontal: 5),
             alignment: Alignment.center,
             decoration: const BoxDecoration(
                 color: Colors.blueAccent,
