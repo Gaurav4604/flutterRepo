@@ -3,6 +3,7 @@ import 'package:test_app/adjustable_list.dart';
 import 'package:test_app/complex_lists.dart';
 import 'package:test_app/layout_screen.dart';
 import 'package:test_app/lists_and_grid_screen.dart';
+import 'package:test_app/long_lists.dart';
 
 class Route {
   final Widget page;
@@ -28,6 +29,7 @@ class RoutesScreen extends StatelessWidget {
     Route(const ListsAndGridScreen(), "Lists and Grid 1"),
     Route(ComplexLists(), "Lists and Grid 2"),
     Route(const AdjustableList(), "Lists and Grid 3"),
+    Route(const LongLists(), "Lists and Grid 4"),
   ];
 
   @override
