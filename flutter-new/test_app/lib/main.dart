@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         "/lists-and-grids-1": (context) => const ListsAndGridScreen(),
         "/lists-and-grids-2": (context) => ComplexLists(),
         "/lists-and-grids-3": (context) => const AdjustableList(),
-        "/lists-and-grids-4": (context) => const LongLists(),
+        "/lists-and-grids-4": (context) => LongLists(),
       },
       // home: HomeScreen()
     );

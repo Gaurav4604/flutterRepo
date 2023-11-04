@@ -29,7 +29,7 @@ class RoutesScreen extends StatelessWidget {
     Route(const ListsAndGridScreen(), "Lists and Grid 1"),
     Route(ComplexLists(), "Lists and Grid 2"),
     Route(const AdjustableList(), "Lists and Grid 3"),
-    Route(const LongLists(), "Lists and Grid 4"),
+    Route(LongLists(), "Lists and Grid 4"),
   ];
 
   @override
