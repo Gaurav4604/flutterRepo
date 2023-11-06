@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
 class MassiveList extends StatelessWidget {
   MassiveList({super.key});
 
-  final items = List.generate(10000, (index) => 'item ${index + 1}');
+  final items = List.generate(1000, (index) => 'item ${index + 1}');
 
   @override
   Widget build(BuildContext context) {
