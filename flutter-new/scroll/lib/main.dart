@@ -41,12 +41,14 @@ class MassiveList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scrollbar(
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          return FancyContainer(content: items[index]);
-        },
-        itemCount: items.length,
-        prototypeItem: FancyContainer(content: items.first),
+      child: CustomScrollView(
+        slivers: ListView.builder(
+          itemBuilder: (context, index) {
+            return FancyContainer(content: items[index]);
+          },
+          itemCount: items.length,
+          prototypeItem: FancyContainer(content: items.first),
+        ).buildSlivers(context),
       ),
     );
   }
