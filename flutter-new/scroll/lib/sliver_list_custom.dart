@@ -15,7 +15,15 @@ class CustomSliverList extends StatelessWidget {
             title: Text("Company Names"),
             floating: true,
           ),
-          const MyCustomSliver(child: Text("Hi there")),
+          MyCustomSliver(
+              child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(color: Colors.amber[100]),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    "Hi there",
+                    style: TextStyle(color: Colors.black),
+                  ))),
           SliverPadding(
             padding: const EdgeInsets.only(left: 10),
             sliver: TheSliverList(),
