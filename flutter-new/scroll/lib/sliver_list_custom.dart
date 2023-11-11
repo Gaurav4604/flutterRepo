@@ -10,6 +10,7 @@ class CustomSliverList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        // scrollDirection: Axis.horizontal,
         slivers: [
           const SliverAppBar(
             title: Text("Company Names"),

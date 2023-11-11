@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scroll/parallax_scroll.dart';
 import 'package:scroll/sliver_list_custom.dart';
 import 'package:scroll/sliver_list_with_appbar.dart';
 
@@ -27,7 +28,8 @@ class HorizonsApp extends StatelessWidget {
       routes: {
         "/home": (context) => HomeScreen(),
         "/sliver-list-with-appBar": (context) => const SliverListWithAppBar(),
-        "/sliver-list-custom": (context) => const CustomSliverList()
+        "/sliver-list-custom": (context) => const CustomSliverList(),
+        "/parallax-scroll": (context) => const ParallaxScroll()
       },
       initialRoute: "/home",
     );
@@ -36,7 +38,11 @@ class HorizonsApp extends StatelessWidget {
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-  final routeList = ["home", "sliver-list-with-appBar", "sliver-list-custom"];
+  final routeList = [
+    "sliver-list-with-appBar",
+    "sliver-list-custom",
+    "parallax-scroll"
+  ];
 
   @override
   Widget build(BuildContext context) {
