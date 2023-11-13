@@ -30,6 +30,8 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: LayoutBuilder(builder: (context, constraints) {
+        if (constraints.hasBoundedHeight) {}
+
         return Center(
           child: ListView(
             children: [
