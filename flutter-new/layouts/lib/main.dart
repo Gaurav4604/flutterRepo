@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        visualDensity: const VisualDensity(horizontal: 4, vertical: 4),
       ),
       debugShowCheckedModeBanner: false,
       home: const Homepage(),
@@ -33,8 +34,9 @@ class Homepage extends StatelessWidget {
         title: const Text("Layout Management"),
       ),
       body: LayoutBuilder(builder: (context, constraints) {
-        if (constraints.maxWidth > 400) {
+        if (constraints.maxWidth > 600) {
           return const WideLayout();
+          // TODO add multiple cases for 400 and 600, thats a grid of photos
         } else {
           return const NarrowLayout();
         }
@@ -56,7 +58,9 @@ class PersonList extends StatelessWidget {
         for (final person in people)
           ListTile(
               title: Text(person.name),
-              leading: Image.network(person.picture),
+              leading: Image.network(
+                person.picture,
+              ),
               onTap: () => onPersonTap(person)),
       ],
     );
@@ -69,16 +73,50 @@ class PersonDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(person.name),
-          Text(person.phone),
-        ],
-      ),
-    );
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      if (constraints.maxHeight > 200) {
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              MouseRegion(
+                  onEnter: (event) {
+                    print(event);
+                  },
+                  child: Text(person.name)),
+              Text(person.phone),
+              MaterialButton(
+                  onPressed: () => {},
+                  color: Colors.blue[300],
+                  hoverColor: Colors.blue[500],
+                  child: const Text("Contact Me"))
+            ],
+          ),
+        );
+      } else {
+        return Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              MouseRegion(
+                  onEnter: (event) {
+                    print(event);
+                  },
+                  child: Text(person.name)),
+              Text(person.phone),
+              MaterialButton(
+                  onPressed: () => {},
+                  color: Colors.blue[300],
+                  hoverColor: Colors.blue[500],
+                  child: const Text("Contact Me"))
+            ],
+          ),
+        );
+      }
+    });
   }
 }
 
@@ -114,12 +152,22 @@ class _WideLayoutState extends State<WideLayout> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-            flex: 2,
-            child: PersonList(
-              onPersonTap: (person) => setState(() => _selectedPerson = person),
+        SizedBox(
+            width: 300,
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: PersonList(
+                onPersonTap: (person) => {
+                  if ((_selectedPerson != null &&
+                          _selectedPerson?.phone != person.phone) ||
+                      _selectedPerson == null)
+                    setState(() {
+                      _selectedPerson = person;
+                    })
+                },
+              ),
             )),
-        Expanded(
+        Flexible(
           flex: 3,
           child: _selectedPerson == null
               ? const Placeholder()
