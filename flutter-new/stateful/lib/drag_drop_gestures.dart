@@ -184,6 +184,13 @@ class _MenuListItemState extends State<MenuListItem>
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _borderRadiusAnimation.removeListener(() => setState(() {}));
+    _controller.dispose();
+    super.dispose();
+  }
 }
 
 class LongPressDraggingItem extends StatelessWidget {
