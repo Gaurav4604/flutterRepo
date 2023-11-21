@@ -18,6 +18,7 @@ class _CustomDismissibleScreenState extends State<CustomDismissibleScreen> {
         slivers: [
           const SliverAppBar(
             title: Text("Dismissibles"),
+            pinned: true,
           ),
           SliverList.builder(
             itemCount: dismissibles.length,
