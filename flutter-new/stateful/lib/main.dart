@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stateful/drag_drop_gestures.dart';
+import 'package:stateful/inkwell_based_button.dart';
 import 'package:stateful/simple_gestures.dart';
 import 'package:stateful/simple_stateful_layout.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         "/stateful_layout": (context) => LayoutScreen(),
         "/gesture_basic_with_snackbar": (context) => const SimpleGestures(),
         "/gesture_drag_drop": (context) => const DragDrop(),
+        "/inkwell_flat_button": (context) => const InkWellScreen(),
       },
       initialRoute: "/",
     );
@@ -33,7 +35,8 @@ class Home extends StatelessWidget {
   final List<String> routes = [
     "stateful_layout",
     "gesture_basic_with_snackbar",
-    "gesture_drag_drop"
+    "gesture_drag_drop",
+    "inkwell_flat_button"
   ];
 
   @override
