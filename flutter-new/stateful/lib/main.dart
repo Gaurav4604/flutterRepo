@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stateful/custom_dismissible.dart';
 import 'package:stateful/custom_text_fields.dart';
 import 'package:stateful/drag_drop_gestures.dart';
+import 'package:stateful/focus_based_text_fields.dart';
 import 'package:stateful/inkwell_based_button.dart';
 import 'package:stateful/simple_gestures.dart';
 import 'package:stateful/simple_stateful_layout.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         "/custom_dismissibles": (context) => const CustomDismissibleScreen(),
         "/simple_textfield": (context) => const SimpleTextFieldsScreen(),
         "/custom_textfield": (context) => const CustomTextFieldsScreen(),
+        "/focus_textfield": (context) => const FocusBasedTextFieldScreen(),
       },
       initialRoute: "/",
     );
@@ -45,7 +47,8 @@ class Home extends StatelessWidget {
     "inkwell_flat_button",
     "custom_dismissibles",
     "simple_textfield",
-    "custom_textfield"
+    "custom_textfield",
+    "focus_textfield"
   ];
 
   @override

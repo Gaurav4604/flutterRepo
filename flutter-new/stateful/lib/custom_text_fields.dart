@@ -8,11 +8,23 @@ class CustomTextFieldsScreen extends StatefulWidget {
 }
 
 class _CustomTextFieldsScreenState extends State<CustomTextFieldsScreen> {
-  final textController = TextEditingController();
+  final textControllerA = TextEditingController();
+  final textControllerB = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    textControllerB.addListener(() {
+      String text = textControllerB.text;
+      print(text);
+    });
+  }
 
   @override
   void dispose() {
-    textController.dispose();
+    textControllerA.dispose();
+    textControllerB.dispose();
     super.dispose();
   }
 
@@ -27,14 +39,18 @@ class _CustomTextFieldsScreenState extends State<CustomTextFieldsScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextField(
-            controller: textController,
-          )
+            controller: textControllerA,
+          ),
+          TextField(
+            controller: textControllerB,
+            // onChanged: (value) => print(value),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(textController.text),
+            content: Text(textControllerA.text),
             duration: const Duration(milliseconds: 500),
           ));
         },
