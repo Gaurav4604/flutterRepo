@@ -23,30 +23,39 @@ class _SelectCopyTextFieldsState extends State<SelectCopyTextFields> {
       appBar: AppBar(
         title: const Text("Select Copy TextField"),
       ),
-      body: Actions(
-        // dispatcher not specified (so default dispatcher will be used)
-        actions: {
-          CopyIntent: CopyAction(controller),
-          SelectAllIntent: SelectAllAction(controller)
+      body: Shortcuts(
+        shortcuts: {
+          LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyC):
+              const CopyIntent(),
+          LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyA):
+              const SelectAllIntent()
         },
-        // dispatcher: LoggingActionDispatcher(),
-        child: Builder(builder: (context) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextField(
-                controller: controller,
-              ),
-              IconButton(
-                  onPressed: Actions.handler(context, const SelectAllIntent()),
-                  icon: const Icon(Icons.select_all)),
-              IconButton(
-                  onPressed: Actions.handler(context, const CopyIntent()),
-                  icon: const Icon(Icons.copy)),
-            ],
-          );
-        }),
+        child: Actions(
+          // dispatcher not specified (so default dispatcher will be used)
+          actions: {
+            CopyIntent: CopyAction(controller),
+            SelectAllIntent: SelectAllAction(controller)
+          },
+          // dispatcher: LoggingActionDispatcher(),
+          child: Builder(builder: (context) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextField(
+                  controller: controller,
+                ),
+                IconButton(
+                    onPressed:
+                        Actions.handler(context, const SelectAllIntent()),
+                    icon: const Icon(Icons.select_all)),
+                IconButton(
+                    onPressed: Actions.handler(context, const CopyIntent()),
+                    icon: const Icon(Icons.copy)),
+              ],
+            );
+          }),
+        ),
       ),
     );
   }
