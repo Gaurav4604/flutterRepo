@@ -4,6 +4,7 @@ import 'package:stateful/custom_text_fields.dart';
 import 'package:stateful/drag_drop_gestures.dart';
 import 'package:stateful/focus_based_text_fields.dart';
 import 'package:stateful/inkwell_based_button.dart';
+import 'package:stateful/select_copy_text_text_field.dart';
 import 'package:stateful/simple_gestures.dart';
 import 'package:stateful/simple_stateful_layout.dart';
 import 'package:stateful/simple_text_fields.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         "/simple_textfield": (context) => const SimpleTextFieldsScreen(),
         "/custom_textfield": (context) => const CustomTextFieldsScreen(),
         "/focus_textfield": (context) => const FocusBasedTextFieldScreen(),
+        "/select_copy_textfield": (context) => const SelectCopyTextFields(),
       },
       initialRoute: "/",
     );
@@ -48,7 +50,8 @@ class Home extends StatelessWidget {
     "custom_dismissibles",
     "simple_textfield",
     "custom_textfield",
-    "focus_textfield"
+    "focus_textfield",
+    "select_copy_textfield"
   ];
 
   @override
