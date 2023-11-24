@@ -38,12 +38,14 @@ class _SelectCopyTextFieldsState extends State<SelectCopyTextFields> {
           },
           // dispatcher: LoggingActionDispatcher(),
           child: Builder(builder: (context) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            return Row(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextField(
-                  controller: controller,
+                Expanded(
+                  child: TextField(
+                    controller: controller,
+                  ),
                 ),
                 IconButton(
                     onPressed:
