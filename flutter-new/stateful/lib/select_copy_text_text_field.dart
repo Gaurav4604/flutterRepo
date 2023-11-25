@@ -21,7 +21,7 @@ class _SelectCopyTextFieldsState extends State<SelectCopyTextFields> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Select Copy TextField"),
+        title: const Text("Shortcuts based Screen"),
       ),
       body: Shortcuts(
         shortcuts: {
