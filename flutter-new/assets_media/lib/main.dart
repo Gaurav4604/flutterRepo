@@ -17,6 +17,7 @@ class App extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const HomePage(title: 'Flutter Demo Home Page'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
