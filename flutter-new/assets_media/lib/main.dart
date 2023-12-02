@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                 CachedNetworkImage(
                   imageUrl:
                       'https://docs.flutter.dev/assets/images/dash/dash-fainting.gif',
-                  placeholder: (_, __) => const CircularProgressIndicator(),
+                  placeholder: (__, ___) => const CircularProgressIndicator(),
                 ),
               ],
       ),
