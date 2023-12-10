@@ -43,9 +43,9 @@ class HomePage extends StatelessWidget {
       ),
       body: const TabBarView(
         children: [
-          Center(child: Text("Bike Man!")),
-          Center(child: Text("Transit Man!")),
-          Center(child: Text("Car Man!")),
+          Center(child: Text("Bike!")),
+          Center(child: Text("Transit!")),
+          Center(child: Text("Car!")),
         ],
       ),
     );
