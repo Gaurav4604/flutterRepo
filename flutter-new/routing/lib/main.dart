@@ -38,14 +38,20 @@ class HomePage extends StatelessWidget {
           ),
           Tab(
             icon: Icon(Icons.directions_car),
-          )
+          ),
+          Tab(
+            icon: Icon(Icons.directions),
+          ),
         ]),
       ),
-      body: const TabBarView(
+      body: TabBarView(
         children: [
-          Center(child: Text("Bike!")),
-          Center(child: Text("Transit!")),
-          Center(child: Text("Car!")),
+          const Center(child: Text("Bike!")),
+          const Center(child: Text("Transit!")),
+          const Center(child: Text("Car!")),
+          Center(
+              child: ElevatedButton(
+                  onPressed: () {}, child: const Text("Routing!"))),
         ],
       ),
     );
