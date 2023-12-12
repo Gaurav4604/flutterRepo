@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 3,
+        length: 4,
         child: HomePage(),
       ),
     );
@@ -51,8 +51,26 @@ class HomePage extends StatelessWidget {
           const Center(child: Text("Car!")),
           Center(
               child: ElevatedButton(
-                  onPressed: () {}, child: const Text("Routing!"))),
+                  onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SecondPage()),
+                      ),
+                  child: const Text("Routing!"))),
         ],
+      ),
+    );
+  }
+}
+
+class SecondPage extends StatelessWidget {
+  const SecondPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text("This is a Second Screen"),
       ),
     );
   }
