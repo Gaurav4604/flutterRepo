@@ -7,14 +7,34 @@ class Todo {
   final String description;
 }
 
-class TodoListScreen extends StatelessWidget {
+class TodoListScreen extends StatefulWidget {
   TodoListScreen({super.key});
 
+  @override
+  State<TodoListScreen> createState() => _TodoListScreenState();
+}
+
+class _TodoListScreenState extends State<TodoListScreen> {
   final todoList = List.generate(
       100,
       (index) => Todo(
           title: "title for todo: $index",
           description: "description for todo: $index"));
+
+  Future<void> _navigateToTodoAndReturnResultOnPop(
+      BuildContext context, Todo todo) async {
+    final result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => TodoDescriptionScreen(todo: todo)));
+    if (!mounted) {
+      return;
+    } else {
+      ScaffoldMessenger.of(context)
+        ..removeCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text("$result")));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +49,7 @@ class TodoListScreen extends StatelessWidget {
                 title: Text(todoList[index].title),
                 subtitle: Text(todoList[index].description),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return TodoDescriptionScreen(todo: todoList[index]);
-                    },
-                  ));
+                  _navigateToTodoAndReturnResultOnPop(context, todoList[index]);
                 },
               );
             },
@@ -52,8 +68,17 @@ class TodoDescriptionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text(todo.description),
+      appBar: AppBar(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(todo.description),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context, "A message to say hi!");
+              },
+              child: const Text("message filled go back"))
+        ],
       ),
     );
   }
