@@ -8,7 +8,7 @@ class Todo {
 }
 
 class TodoListScreen extends StatefulWidget {
-  TodoListScreen({super.key});
+  const TodoListScreen({super.key});
 
   @override
   State<TodoListScreen> createState() => _TodoListScreenState();
