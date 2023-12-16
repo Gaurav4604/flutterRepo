@@ -69,7 +69,21 @@ class SecondPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const Text("Hi There"),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Pop!"))
+            ],
+          ),
+        ),
+      ),
       body: Center(
         child: Text("This is a Second Screen"),
       ),
