@@ -84,7 +84,7 @@ class SecondPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Center(
+      body: const Center(
         child: Text("This is a Second Screen"),
       ),
     );
