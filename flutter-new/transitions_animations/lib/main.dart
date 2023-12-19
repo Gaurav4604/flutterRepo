@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transitions_animations/doppler_based_color_animation.dart';
+import 'package:transitions_animations/galaxy_spin.dart';
 
 void main() {
   runApp(const MyApp());
@@ -69,7 +70,14 @@ class _HomePageState extends State<HomePage> {
                     builder: (context) => const DopplerColorFilterAnimation(),
                   ));
                 },
-                child: const Text("Go To Doppler"))
+                child: const Text("Go To Doppler")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const GalaxySpin(),
+                  ));
+                },
+                child: const Text("Go To Spinning Galaxy"))
           ],
         ),
       ),
@@ -79,8 +87,8 @@ class _HomePageState extends State<HomePage> {
             expand = !expand;
           });
         },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        tooltip: 'Expand/Collapse',
+        child: Icon(expand ? Icons.unfold_less_rounded : Icons.expand),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
