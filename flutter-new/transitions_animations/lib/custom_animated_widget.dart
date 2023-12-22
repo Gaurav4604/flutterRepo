@@ -31,13 +31,33 @@ class _LightRayTransitionState extends State<LightRayTransition>
       appBar: AppBar(
         title: const Text("Light Ray"),
       ),
-      body: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          return Container(
-              color: Colors.red, height: 1000 * _controller.value, width: 20);
-        },
-      ),
+      body: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return Container(
+                    color: Colors.red,
+                    height: 800 * _controller.value,
+                    width: 20);
+              },
+            ),
+            RayTransition(animation: _controller)
+          ]),
     );
+  }
+}
+
+class RayTransition extends AnimatedWidget {
+  const RayTransition({Key? key, required Animation<double> animation})
+      : super(key: key, listenable: animation);
+
+  @override
+  Widget build(BuildContext context) {
+    final Animation<double> animation = listenable as Animation<double>;
+    return Container(
+        color: Colors.red, height: 800 * animation.value, width: 20);
   }
 }
