@@ -15,7 +15,7 @@ class _LightRayTransitionState extends State<LightRayTransition>
   void initState() {
     super.initState();
     _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 5))
+        AnimationController(vsync: this, duration: const Duration(seconds: 2))
           ..repeat();
   }
 
