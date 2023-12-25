@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class LightRayTransition extends StatefulWidget {
@@ -16,6 +18,7 @@ class _LightRayTransitionState extends State<LightRayTransition>
     super.initState();
     _controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 2))
+          ..addStatusListener((status) => print("$status"))
           ..repeat();
   }
 
@@ -36,7 +39,8 @@ class _LightRayTransitionState extends State<LightRayTransition>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             AnimatedBuilder(
-              animation: _controller,
+              animation:
+                  CurvedAnimation(parent: _controller, curve: ShakeCurve()),
               builder: (context, child) {
                 return Container(
                     color: Colors.red,
@@ -60,4 +64,9 @@ class RayTransition extends AnimatedWidget {
     return Container(
         color: Colors.red, height: 800 * animation.value, width: 20);
   }
+}
+
+class ShakeCurve extends Curve {
+  @override
+  double transform(double t) => sin(t * pi * 2);
 }
