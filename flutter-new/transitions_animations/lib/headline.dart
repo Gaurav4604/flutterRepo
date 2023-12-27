@@ -25,6 +25,10 @@ class HeadlineState extends AnimatedWidgetBaseState<Headline> {
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
+    // in each of the cases, we only pass the begin value,
+    // but when the value e.g. widget.targetColor, changes
+    // the function knows to pass it as the end value
+
     _colorTween = visitor(
       _colorTween,
       widget.targetColor,
@@ -52,6 +56,7 @@ class GhostFadeTween extends Tween<Color?> {
 
   GhostFadeTween({Color? begin, Color? end}) : super(begin: begin, end: end);
 
+  @override
   Color? lerp(double t) {
     if (t <= 0.5) {
       return Color.lerp(begin, middle, t * 2);
@@ -65,6 +70,7 @@ class StringSwitchTween extends Tween<String?> {
   StringSwitchTween({String? begin, String? end})
       : super(begin: begin, end: end);
 
+  @override
   String? lerp(double t) {
     if (t <= 0.5) {
       return begin;
