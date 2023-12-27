@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:transitions_animations/custom_animated_widget.dart';
 import 'package:transitions_animations/doppler_based_color_animation.dart';
 import 'package:transitions_animations/galaxy_spin.dart';
+import 'package:transitions_animations/headline.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,24 +21,13 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomePage(title: 'Base Animation'),
+      home: const HomePage(),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -45,13 +35,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool expand = false;
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Headline(text: "Base Animation", index: index),
       ),
       body: Center(
         child: Column(
@@ -85,7 +76,12 @@ class _HomePageState extends State<HomePage> {
                     builder: (context) => const LightRayTransition(),
                   ));
                 },
-                child: const Text("Go To Light Ray"))
+                child: const Text("Go To Light Ray")),
+            IconButton(
+                onPressed: () => setState(() {
+                      index = index == 0 ? 1 : 0;
+                    }),
+                icon: const Icon(Icons.abc))
           ],
         ),
       ),
