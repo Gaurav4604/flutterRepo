@@ -33,8 +33,22 @@ class HeadlineState extends ImplicitlyAnimatedWidgetState<Headline> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${widget.text} (${widget.index})',
+      '$widget.text',
       style: TextStyle(color: _colorTween?.evaluate(animation)),
     );
+  }
+}
+
+class GhostFadeTween extends Tween<Color> {
+  final Color middle = Colors.white;
+
+  GhostFadeTween({Color? begin, Color? end}) : super(begin: begin, end: end);
+
+  Color lerp(double t) {
+    if (t < 0.5) {
+      return Color.lerp(begin, middle, t * 2);
+    } else {
+      return Color.lerp(middle, end, (t - 0.5) * 2);
+    }
   }
 }
