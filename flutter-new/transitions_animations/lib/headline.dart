@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const List<Color> headlineTextColors = [Colors.green, Colors.red];
+const List<String> headline = ["Base Animation Green!", "Base Animation Red!"];
 const Duration headlineAnimationDuration = Duration(milliseconds: 400);
 
 class Headline extends ImplicitlyAnimatedWidget {
@@ -8,9 +9,11 @@ class Headline extends ImplicitlyAnimatedWidget {
   final int index;
 
   const Headline({Key? key, required this.text, required this.index})
-      : super(duration: headlineAnimationDuration);
+      : super(duration: headlineAnimationDuration, key: key);
 
   Color get targetColor => headlineTextColors[index];
+
+  String get targetString => headline[index];
 
   @override
   HeadlineState createState() => HeadlineState();
@@ -18,6 +21,7 @@ class Headline extends ImplicitlyAnimatedWidget {
 
 class HeadlineState extends AnimatedWidgetBaseState<Headline> {
   GhostFadeTween? _colorTween;
+  StringSwitchTween? _stringSwitchTween;
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
@@ -26,12 +30,18 @@ class HeadlineState extends AnimatedWidgetBaseState<Headline> {
       widget.targetColor,
       (color) => GhostFadeTween(begin: color),
     ) as GhostFadeTween?;
+
+    _stringSwitchTween = visitor(
+      _stringSwitchTween,
+      widget.targetString,
+      (value) => StringSwitchTween(begin: value),
+    ) as StringSwitchTween?;
   }
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      widget.text,
+      _stringSwitchTween!.evaluate(animation) as String,
       style: TextStyle(color: _colorTween!.evaluate(animation)),
     );
   }
@@ -43,10 +53,23 @@ class GhostFadeTween extends Tween<Color?> {
   GhostFadeTween({Color? begin, Color? end}) : super(begin: begin, end: end);
 
   Color? lerp(double t) {
-    if (t < 0.5) {
+    if (t <= 0.5) {
       return Color.lerp(begin, middle, t * 2);
     } else {
       return Color.lerp(middle, end, (t - 0.5) * 2);
+    }
+  }
+}
+
+class StringSwitchTween extends Tween<String?> {
+  StringSwitchTween({String? begin, String? end})
+      : super(begin: begin, end: end);
+
+  String? lerp(double t) {
+    if (t <= 0.5) {
+      return begin;
+    } else {
+      return end;
     }
   }
 }
