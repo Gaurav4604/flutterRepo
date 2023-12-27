@@ -95,6 +95,9 @@ class _HomePageState extends State<HomePage> {
             expand = !expand;
           });
         },
+        shape: expand
+            ? const CircleBorder(side: BorderSide(width: 10))
+            : const CircleBorder(side: BorderSide(width: 0)),
         tooltip: 'Expand/Collapse',
         child: Icon(expand ? Icons.unfold_less_rounded : Icons.expand),
       ), // This trailing comma makes auto-formatting nicer for build methods.
