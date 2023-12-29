@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transitions_animations/animated_container_screen.dart';
 import 'package:transitions_animations/custom_animated_widget.dart';
 import 'package:transitions_animations/doppler_based_color_animation.dart';
 import 'package:transitions_animations/galaxy_spin.dart';
@@ -77,6 +78,13 @@ class _HomePageState extends State<HomePage> {
                   ));
                 },
                 child: const Text("Go To Light Ray")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const AnimatedContainerScreen(),
+                  ));
+                },
+                child: const Text("Go To Animated Container Screen")),
             IconButton(
                 onPressed: () => setState(() {
                       index = index == 0 ? 1 : 0;
