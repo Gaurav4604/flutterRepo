@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                     builder: (context) => const LightRayTransition(),
                   ));
                 },
-                child: const Text("Go To Light Ray")),
+                child: const Text("Go To Light R")),
             ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
