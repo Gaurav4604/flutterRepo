@@ -4,6 +4,7 @@ import 'package:transitions_animations/custom_animated_widget.dart';
 import 'package:transitions_animations/doppler_based_color_animation.dart';
 import 'package:transitions_animations/galaxy_spin.dart';
 import 'package:transitions_animations/headline.dart';
+import 'package:transitions_animations/hero_animation_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -77,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                     builder: (context) => const LightRayTransition(),
                   ));
                 },
-                child: const Text("Go To Light R")),
+                child: const Text("Go To Light Ray")),
             ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -85,6 +86,13 @@ class _HomePageState extends State<HomePage> {
                   ));
                 },
                 child: const Text("Go To Animated Container Screen")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const HeroAnimationScreen(),
+                  ));
+                },
+                child: const Text("Go To Hero Transition Screen")),
             IconButton(
                 onPressed: () => setState(() {
                       index = index == 0 ? 1 : 0;
