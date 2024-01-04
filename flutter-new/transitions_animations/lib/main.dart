@@ -5,6 +5,7 @@ import 'package:transitions_animations/doppler_based_color_animation.dart';
 import 'package:transitions_animations/galaxy_spin.dart';
 import 'package:transitions_animations/headline.dart';
 import 'package:transitions_animations/hero_animation_screen.dart';
+import 'package:transitions_animations/page_route_transition_screen.dart';
 import 'package:transitions_animations/radial_animation_screen.dart';
 
 void main() {
@@ -101,6 +102,13 @@ class _HomePageState extends State<HomePage> {
                   ));
                 },
                 child: const Text("Go To Radial Hero Transition Screen")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const PageRouteTransitionScreen(),
+                  ));
+                },
+                child: const Text("Go To Page Transition Screen")),
             IconButton(
                 onPressed: () => setState(() {
                       index = index == 0 ? 1 : 0;
