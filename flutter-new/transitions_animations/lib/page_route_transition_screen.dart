@@ -92,15 +92,23 @@ class _DraggableRouteButtonState extends State<DraggableRouteButton>
     var size = MediaQuery.of(context).size;
     return GestureDetector(
       onPanDown: (details) {
+        // tells controller to stop actively resetting the value pf _dragAlignment
+        // based on _animation.value
         _controller.stop();
       },
       onPanUpdate: (details) {
         setState(() {
+          // manually sets the _dragAlignment value based on finger movement
+          // the value is set relative to screen center
+          // since the _controller is not listening to setState calls right now
+          // direct _dragAlignment updates are changing button's position
+          // based on the finger movement
           _dragAlignment += Alignment(details.delta.dx / (size.width / 2),
               details.delta.dy / (size.height / 2));
         });
       },
       onPanEnd: (d) {
+        // now the _animation is set up again, with last known position of finger
         _runAnimation(d.velocity.pixelsPerSecond, size);
       },
       child: Align(
