@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
-import 'package:flutter/src/scheduler/ticker.dart';
 
 class PageRouteTransitionScreen extends StatelessWidget {
   const PageRouteTransitionScreen({super.key});

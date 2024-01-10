@@ -7,6 +7,7 @@ import 'package:transitions_animations/headline.dart';
 import 'package:transitions_animations/hero_animation_screen.dart';
 import 'package:transitions_animations/page_route_transition_screen.dart';
 import 'package:transitions_animations/radial_animation_screen.dart';
+import 'package:transitions_animations/stagger_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -109,6 +110,13 @@ class _HomePageState extends State<HomePage> {
                   ));
                 },
                 child: const Text("Go To Page Transition Screen")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const StaggerScreen(),
+                  ));
+                },
+                child: const Text("Go To Stagger Transition Screen")),
             IconButton(
                 onPressed: () => setState(() {
                       index = index == 0 ? 1 : 0;
