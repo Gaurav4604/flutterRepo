@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notes/src/models/notes_manager.dart';
 import 'package:notes/src/widgets/note_preview.dart';
+import 'package:notes/src/widgets/scalable_fab.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -55,6 +56,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isExpanded = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,12 +71,8 @@ class _HomePageState extends State<HomePage> {
         child: NotePreview(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        shape: const CircleBorder(),
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton:
+          ScalableFloatingActionButton(onPress: () {}, scale: 1),
     );
   }
 }

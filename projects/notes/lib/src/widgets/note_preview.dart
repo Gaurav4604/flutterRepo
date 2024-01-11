@@ -9,6 +9,7 @@ class NotePreview extends StatelessWidget {
       height: 200,
       width: 200,
       decoration: BoxDecoration(
+          // border: ,
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(20)),
     );
