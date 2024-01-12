@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/src/animations/crt_animation.dart';
 import 'package:notes/src/models/notes_manager.dart';
 import 'package:notes/src/widgets/note_preview.dart';
 import 'package:notes/src/widgets/scalable_fab.dart';
@@ -67,12 +68,21 @@ class _HomePageState extends State<HomePage> {
           style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
         ),
       ),
-      body: const Center(
-        child: NotePreview(),
+      body: Center(
+        child: CRTCollapseAnimation(
+          height: isExpanded ? 1 : 0,
+          duration: const Duration(milliseconds: 300),
+          child: const NotePreview(),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton:
-          ScalableFloatingActionButton(onPress: () {}, scale: 1),
+      floatingActionButton: ScalableFloatingActionButton(
+          onPress: () {
+            setState(() {
+              isExpanded = !isExpanded;
+            });
+          },
+          scale: 1),
     );
   }
 }
