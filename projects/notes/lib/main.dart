@@ -42,47 +42,92 @@ class App extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomePage(title: 'Home'),
+      home: const HomePage(),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-
-  final String title;
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool isExpanded = true;
+  final GlobalKey<SliverAnimatedGridState> listKey =
+      GlobalKey<SliverAnimatedGridState>();
+  List<String> notesList = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        title: Text(
-          widget.title,
-          style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
-        ),
-      ),
-      body: Center(
-        child: CRTCollapseAnimation(
-          height: isExpanded ? 1 : 0,
-          duration: const Duration(milliseconds: 300),
-          child: const NotePreview(),
-        ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: const Text("Home"),
+            surfaceTintColor: Colors.transparent,
+            backgroundColor: Theme.of(context).colorScheme.background,
+          ),
+          // SliverAppBar(
+          //   title: const Text("tool-bar"),
+          //   surfaceTintColor: Colors.transparent,
+          //   backgroundColor: Theme.of(context).colorScheme.background,
+          //   floating: true,
+          // ),
+          SliverAnimatedGrid(
+            key: listKey,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, // Number of columns
+              mainAxisSpacing: 10, // Spacing between rows
+              crossAxisSpacing: 10, // Spacing between columns
+              childAspectRatio: 1, // Aspect ratio of the cards
+            ),
+            initialItemCount: notesList.length,
+            itemBuilder: (context, index, animation) {
+              return ScaleTransition(
+                  scale: CurvedAnimation(
+                      parent: animation, curve: Curves.easeInOut),
+                  child: NotePreview(
+                    title: notesList.elementAt(index),
+                  ));
+            },
+          ),
+          SliverToBoxAdapter(
+            child: ElevatedButton(
+              child: Text("Remove Item"),
+              onPressed: () {
+                listKey.currentState?.removeAllItems((
+                  context,
+                  animation,
+                ) {
+                  return ScaleTransition(
+                      scale: CurvedAnimation(
+                          parent: animation, curve: Curves.easeInOut),
+                      child: NotePreview(
+                        title: notesList.elementAt(notesList.length - 1),
+                      ));
+                }, duration: const Duration(milliseconds: 400));
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  notesList.clear();
+                });
+              },
+            ),
+          )
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ScalableFloatingActionButton(
-          onPress: () {
-            setState(() {
-              isExpanded = !isExpanded;
-            });
-          },
-          scale: 1),
+        onPressed: () {
+          listKey.currentState?.insertItem(notesList.length);
+          notesList.insert(notesList.length, "an index");
+          setState(() {
+            isExpanded = !isExpanded;
+          });
+        },
+        scale: 1,
+      ),
     );
   }
 }

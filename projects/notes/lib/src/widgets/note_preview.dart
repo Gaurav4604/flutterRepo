@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NotePreview extends StatelessWidget {
-  const NotePreview({super.key});
+  final String title;
+  const NotePreview({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {

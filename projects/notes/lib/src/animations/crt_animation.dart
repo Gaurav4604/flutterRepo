@@ -35,7 +35,7 @@ class _CRTCollapseAnimationState
       child: Align(
         alignment: Alignment.center,
         heightFactor: _heightTween?.evaluate(
-            CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
+            CurvedAnimation(parent: animation, curve: Curves.easeOutCubic)),
         child: widget.child,
       ),
     );
