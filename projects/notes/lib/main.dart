@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
           SliverToBoxAdapter(
             child: ElevatedButton(
-              child: Text("Remove Item"),
+              child: const Text("Remove Item"),
               onPressed: () {
                 listKey.currentState?.removeAllItems((
                   context,
