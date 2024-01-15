@@ -86,12 +86,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
             initialItemCount: notesList.length,
             itemBuilder: (context, index, animation) {
-              return ScaleTransition(
-                  scale: CurvedAnimation(
-                      parent: animation, curve: Curves.easeInOut),
-                  child: NotePreview(
-                    title: notesList.elementAt(index),
-                  ));
+              return CRTAnimation(
+                animation: CurvedAnimation(
+                    parent: animation, curve: Curves.easeInOutExpo),
+                child: NotePreview(
+                  title: notesList.elementAt(index),
+                ),
+              );
             },
           ),
           SliverToBoxAdapter(
@@ -102,8 +103,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   context,
                   animation,
                 ) {
-                  return ScaleTransition(
-                      scale: CurvedAnimation(
+                  return CRTAnimation(
+                      animation: CurvedAnimation(
                           parent: animation, curve: Curves.easeInOut),
                       child: NotePreview(
                         title: notesList.elementAt(notesList.length - 1),
@@ -120,7 +121,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ScalableFloatingActionButton(
         onPressed: () {
-          listKey.currentState?.insertItem(notesList.length);
+          listKey.currentState?.insertItem(notesList.length,
+              duration: const Duration(milliseconds: 500));
           notesList.insert(notesList.length, "an index");
           setState(() {
             isExpanded = !isExpanded;
