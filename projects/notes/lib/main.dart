@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       ));
                 }, duration: const Duration(milliseconds: 400));
                 Future.delayed(const Duration(milliseconds: 500), () {
-                  notesList.clear();
+                  notesList.removeAt(notesList.length - 1);
                 });
               },
             ),
