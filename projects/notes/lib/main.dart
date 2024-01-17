@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: ElevatedButton(
               child: const Text("Remove Item"),
               onPressed: () {
-                listKey.currentState?.removeAllItems((
+                listKey.currentState?.removeItem(notesList.length - 1, (
                   context,
                   animation,
                 ) {
