@@ -23,3 +23,21 @@ class Note {
 
   // You can add methods like copyWith, toJson, fromJson, etc., for more functionality.
 }
+
+List<Note> generateSampleNotes(int count) {
+  List<Note> notes = [];
+  for (int i = 1; i <= count; i++) {
+    notes.add(Note(
+      id: 'id_$i',
+      title: 'Note Title $i',
+      content: 'This is the content of note $i.',
+      createdAt: DateTime.now().subtract(Duration(days: i)),
+      updatedAt:
+          i % 2 == 0 ? DateTime.now().subtract(Duration(days: i - 1)) : null,
+      category: i % 3 == 0 ? 'Category ${i ~/ 3}' : null,
+      color: i % 4 == 0 ? Colors.primaries[i % Colors.primaries.length] : null,
+      isPinned: i % 5 == 0,
+    ));
+  }
+  return notes;
+}
