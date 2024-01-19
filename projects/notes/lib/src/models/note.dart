@@ -29,7 +29,7 @@ List<Note> generateSampleNotes(int count) {
   for (int i = 1; i <= count; i++) {
     notes.add(Note(
       id: 'id_$i',
-      title: 'Note Title $i',
+      title: 'This is the Note Title $i',
       content: 'This is the content of note $i.',
       createdAt: DateTime.now().subtract(Duration(days: i)),
       updatedAt:
