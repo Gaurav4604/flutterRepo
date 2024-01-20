@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes/src/animations/crt_animation.dart';
+import 'package:notes/src/models/note.dart';
 import 'package:notes/src/models/notes_manager.dart';
 import 'package:notes/src/widgets/note_preview.dart';
 import 'package:notes/src/widgets/scalable_fab.dart';
@@ -58,10 +59,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool isExpanded = true;
   final GlobalKey<SliverAnimatedGridState> listKey =
       GlobalKey<SliverAnimatedGridState>();
-  List<String> notesList = [];
+
+  @override
+  void initState() {
+    var sampleNotes = generateSampleNotes(10);
+    sampleNotes.forEach((note) {
+      final notesManager = Provider.of<NotesManager>(context);
+      notesManager.addNote(note);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final notesManager = Provider.of<NotesManager>(context);
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -84,13 +96,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               crossAxisSpacing: 10, // Spacing between columns
               childAspectRatio: 1, // Aspect ratio of the cards
             ),
-            initialItemCount: notesList.length,
+            initialItemCount: notesManager.notes.length,
             itemBuilder: (context, index, animation) {
               return CRTAnimation(
                 animation: CurvedAnimation(
                     parent: animation, curve: Curves.easeInOutExpo),
                 child: NotePreview(
-                  title: notesList.elementAt(index),
+                  title: notesManager.notes.elementAt(index).title,
                 ),
               );
             },
@@ -99,7 +111,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: ElevatedButton(
               child: const Text("Remove Item"),
               onPressed: () {
-                listKey.currentState?.removeItem(notesList.length - 1, (
+                listKey.currentState?.removeItem(notesManager.notes.length - 1,
+                    (
                   context,
                   animation,
                 ) {
@@ -107,11 +120,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       animation: CurvedAnimation(
                           parent: animation, curve: Curves.easeInOut),
                       child: NotePreview(
-                        title: notesList.elementAt(notesList.length - 1),
+                        title: notesManager.notes
+                            .elementAt(notesManager.notes.length - 1)
+                            .title,
                       ));
                 }, duration: const Duration(milliseconds: 400));
                 Future.delayed(const Duration(milliseconds: 500), () {
-                  notesList.removeAt(notesList.length - 1);
+                  notesManager.notes.removeAt(notesManager.notes.length - 1);
                 });
               },
             ),
@@ -121,9 +136,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ScalableFloatingActionButton(
         onPressed: () {
-          listKey.currentState?.insertItem(notesList.length,
+          listKey.currentState?.insertItem(notesManager.notes.length,
               duration: const Duration(milliseconds: 500));
-          notesList.insert(notesList.length, "an index");
+          notesManager.notes
+              .insert(notesManager.notes.length, generateSampleNotes(1)[0]);
           setState(() {
             isExpanded = !isExpanded;
           });
