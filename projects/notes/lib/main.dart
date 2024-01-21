@@ -63,10 +63,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     var sampleNotes = generateSampleNotes(10);
-    sampleNotes.forEach((note) {
+    for (var note in sampleNotes) {
       final notesManager = Provider.of<NotesManager>(context);
       notesManager.addNote(note);
-    });
+    }
     super.initState();
   }
 
