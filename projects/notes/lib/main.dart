@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            title: const Text("Home"),
+            title: const Text("Home Page"),
             surfaceTintColor: Colors.transparent,
             backgroundColor: Theme.of(context).colorScheme.background,
           ),
