@@ -56,24 +56,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  bool isExpanded = true;
   final GlobalKey<SliverAnimatedGridState> listKey =
       GlobalKey<SliverAnimatedGridState>();
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      final notesManager = Provider.of<NotesManager>(context, listen: false);
-      var sampleNotes = generateSampleNotes(10);
-      var counter = 0;
-      for (var note in sampleNotes) {
-        notesManager.addNote(note);
-        listKey.currentState
-            ?.insertItem(counter, duration: const Duration(milliseconds: 500));
-        counter++;
-      }
-    });
+    // Future.microtask(() {
+    //   final notesManager = Provider.of<NotesManager>(context, listen: false);
+    //   var sampleNotes = generateSampleNotes(10);
+    //   var counter = 0;
+    //   for (var note in sampleNotes) {
+    //     notesManager.addNote(note);
+    //     listKey.currentState
+    //         ?.insertItem(counter, duration: const Duration(milliseconds: 500));
+    //     counter++;
+    //   }
+    // });
   }
 
   @override
@@ -141,14 +140,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ScalableFloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
+          var sampleNote = generateSampleNotes(1)[0];
+          await notesManager.addNote(sampleNote);
           listKey.currentState?.insertItem(notesManager.notes.length,
               duration: const Duration(milliseconds: 500));
-          notesManager.notes
-              .insert(notesManager.notes.length, generateSampleNotes(1)[0]);
-          setState(() {
-            isExpanded = !isExpanded;
-          });
         },
         scale: 1,
       ),

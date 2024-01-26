@@ -1,23 +1,60 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
-import 'package:notes/src/models/note.dart';
+import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
+// ignore: depend_on_referenced_packages
+import 'package:path/path.dart';
+import 'note.dart'; // Replace with the correct path to your Note class
 
 class NotesManager extends ChangeNotifier {
-  // Assuming you have a list to store notes in memory
-  // In a real app, this could interface with a database
-  final List<Note> _notes = [];
+  List<Note> _notes = [];
+  Database? _database;
 
-  // Create a new note
-  void addNote(Note note) {
+  NotesManager() {
+    _initializeDB().then((_) {
+      _loadNotesFromDB();
+    });
+  }
+
+  Future<void> _initializeDB() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'notes_database.db');
+
+    _database =
+        await openDatabase(path, version: 1, onCreate: (db, version) async {
+      await db.execute('''
+        CREATE TABLE notes(
+          id TEXT PRIMARY KEY, 
+          title TEXT NOT NULL, 
+          content TEXT NOT NULL,
+          createdAt TEXT NOT NULL,
+          updatedAt TEXT,
+          category TEXT,
+          color INTEGER,
+          isPinned INTEGER
+        )
+      ''');
+    });
+  }
+
+  Future<void> _loadNotesFromDB() async {
+    final List<Map<String, dynamic>> maps = await _database!.query('notes');
+    _notes = maps.map((map) => Note.fromMap(map)).toList();
+    notifyListeners();
+  }
+
+  Future<void> addNote(Note note) async {
+    await _database!.insert('notes', note.toMap());
     _notes.add(note);
     notifyListeners();
   }
 
-  // Retrieve all notes
-  List<Note> get notes => _notes;
-
-  // Update a note
-  void updateNote(String noteId, Note updatedNote) {
+  Future<void> updateNote(String noteId, Note updatedNote) async {
+    await _database!.update(
+      'notes',
+      updatedNote.toMap(),
+      where: 'id = ?',
+      whereArgs: [noteId],
+    );
     final index = _notes.indexWhere((note) => note.id == noteId);
     if (index != -1) {
       _notes[index] = updatedNote;
@@ -25,19 +62,23 @@ class NotesManager extends ChangeNotifier {
     }
   }
 
-  // Delete a note
-  void deleteNote(String noteId) {
+  Future<void> deleteNote(String noteId) async {
+    await _database!.delete(
+      'notes',
+      where: 'id = ?',
+      whereArgs: [noteId],
+    );
     _notes.removeWhere((note) => note.id == noteId);
     notifyListeners();
+  }
+
+  List<Note> get notes => _notes;
+
+  Note? getNoteById(String noteId) {
+    return _notes.firstWhereOrNull((note) => note.id == noteId);
   }
 
   Set<String> get categories {
     return _notes.map((note) => note.category).whereType<String>().toSet();
   }
-
-  // Find a single note by ID
-  Note? getNoteById(String noteId) {
-    return _notes.firstWhereOrNull((note) => note.id == noteId);
-  }
-  // Additional methods as needed...
 }

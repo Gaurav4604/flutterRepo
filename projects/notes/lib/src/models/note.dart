@@ -1,27 +1,52 @@
 import 'package:flutter/material.dart';
 
 class Note {
-  final String id; // Unique identifier for the note
-  final String title; // Title of the note
-  String content; // Content of the note
-  DateTime createdAt; // Date and time the note was created
-  DateTime? updatedAt; // Date and time the note was last updated (nullable)
-  String? category; // Optional category or tag for the note
-  Color? color; // Optional color for the note (for UI purposes)
-  bool isPinned; // Whether the note is pinned or not
+  final String id;
+  final String title;
+  final String content;
+  final DateTime createdAt;
+  final DateTime? updatedAt;
+  final String? category;
+  final Color? color;
+  final bool isPinned;
 
   Note({
     required this.id,
     required this.title,
     required this.content,
-    DateTime? createdAt,
+    required this.createdAt,
     this.updatedAt,
     this.category,
     this.color,
     this.isPinned = false,
-  }) : createdAt = createdAt ?? DateTime.now();
+  });
 
-  // You can add methods like copyWith, toJson, fromJson, etc., for more functionality.
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'content': content,
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
+      'category': category,
+      'color': color?.value,
+      'isPinned': isPinned ? 1 : 0,
+    };
+  }
+
+  static Note fromMap(Map<String, dynamic> map) {
+    return Note(
+      id: map['id'],
+      title: map['title'],
+      content: map['content'],
+      createdAt: DateTime.parse(map['createdAt']),
+      updatedAt:
+          map['updatedAt'] != null ? DateTime.parse(map['updatedAt']) : null,
+      category: map['category'],
+      color: map['color'] != null ? Color(map['color']) : null,
+      isPinned: map['isPinned'] == 1,
+    );
+  }
 }
 
 List<Note> generateSampleNotes(int count) {
