@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             key: listKey,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, // Number of columns
-              mainAxisSpacing: 10, // Spacing between rows
+              mainAxisSpacing: 20, // Spacing between rows
               crossAxisSpacing: 10, // Spacing between columns
               childAspectRatio: 1, // Aspect ratio of the cards
             ),
