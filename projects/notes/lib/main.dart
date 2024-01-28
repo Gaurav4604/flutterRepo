@@ -58,96 +58,104 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   final GlobalKey<SliverAnimatedGridState> listKey =
       GlobalKey<SliverAnimatedGridState>();
+  late Future<void> _loadNotesFuture;
 
   @override
   void initState() {
     super.initState();
-    // Future.microtask(() {
-    //   final notesManager = Provider.of<NotesManager>(context, listen: false);
-    //   var sampleNotes = generateSampleNotes(10);
-    //   var counter = 0;
-    //   for (var note in sampleNotes) {
-    //     notesManager.addNote(note);
-    //     listKey.currentState
-    //         ?.insertItem(counter, duration: const Duration(milliseconds: 500));
-    //     counter++;
-    //   }
-    // });
+    final notesManager = Provider.of<NotesManager>(context, listen: false);
+    _loadNotesFuture =
+        notesManager.loadNotesFromDB(); // Initialize the future here
   }
 
   @override
   Widget build(BuildContext context) {
     final notesManager = Provider.of<NotesManager>(context);
-
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            title: const Text("Home"),
-            surfaceTintColor: Colors.transparent,
-            backgroundColor: Theme.of(context).colorScheme.background,
-          ),
-          // SliverAppBar(
-          //   title: const Text("tool-bar"),
-          //   surfaceTintColor: Colors.transparent,
-          //   backgroundColor: Theme.of(context).colorScheme.background,
-          //   floating: true,
-          // ),
-          SliverAnimatedGrid(
-            key: listKey,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // Number of columns
-              mainAxisSpacing: 20, // Spacing between rows
-              crossAxisSpacing: 10, // Spacing between columns
-              childAspectRatio: 1, // Aspect ratio of the cards
-            ),
-            initialItemCount: notesManager.notes.length,
-            itemBuilder: (context, index, animation) {
-              return CRTAnimation(
-                animation: CurvedAnimation(
-                    parent: animation, curve: Curves.easeInOutExpo),
-                child: NotePreview(
-                  title: notesManager.notes.elementAt(index).title,
-                ),
-              );
-            },
-          ),
-          SliverToBoxAdapter(
-            child: ElevatedButton(
-              child: const Text("Remove Item"),
-              onPressed: () {
-                listKey.currentState?.removeItem(notesManager.notes.length - 1,
-                    (
-                  context,
-                  animation,
-                ) {
-                  return CRTAnimation(
-                      animation: CurvedAnimation(
-                          parent: animation, curve: Curves.easeInOut),
-                      child: NotePreview(
-                        title: notesManager.notes
-                            .elementAt(notesManager.notes.length - 1)
-                            .title,
-                      ));
-                }, duration: const Duration(milliseconds: 400));
-                Future.delayed(const Duration(milliseconds: 500), () {
-                  notesManager.notes.removeAt(notesManager.notes.length - 1);
-                });
-              },
-            ),
-          )
-        ],
-      ),
+      body: FutureBuilder(
+          future: _loadNotesFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              print(notesManager.notes);
+              return _buildNotesGrid(context);
+            } else {
+              return const CircularProgressIndicator();
+            }
+          }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ScalableFloatingActionButton(
         onPressed: () async {
           var sampleNote = generateSampleNotes(1)[0];
           await notesManager.addNote(sampleNote);
-          listKey.currentState?.insertItem(notesManager.notes.length,
+
+          // Use 'notesManager.notes.length - 1' as the new note is added at the end of the list
+          listKey.currentState?.insertItem(notesManager.notes.length - 1,
               duration: const Duration(milliseconds: 500));
         },
         scale: 1,
       ),
+    );
+  }
+
+  CustomScrollView _buildNotesGrid(BuildContext context) {
+    final notesManager = Provider.of<NotesManager>(context);
+
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          title: const Text("Home"),
+          surfaceTintColor: Colors.transparent,
+          backgroundColor: Theme.of(context).colorScheme.background,
+        ),
+        // SliverAppBar(
+        //   title: const Text("tool-bar"),
+        //   surfaceTintColor: Colors.transparent,
+        //   backgroundColor: Theme.of(context).colorScheme.background,
+        //   floating: true,
+        // ),
+        SliverAnimatedGrid(
+          key: listKey,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, // Number of columns
+            mainAxisSpacing: 10, // Spacing between rows
+            crossAxisSpacing: 10, // Spacing between columns
+            childAspectRatio: 1, // Aspect ratio of the cards
+          ),
+          initialItemCount: notesManager.notes.length,
+          itemBuilder: (context, index, animation) {
+            return CRTAnimation(
+              animation: CurvedAnimation(
+                  parent: animation, curve: Curves.easeInOutExpo),
+              child: NotePreview(
+                title: notesManager.notes.elementAt(index).title,
+              ),
+            );
+          },
+        ),
+        SliverToBoxAdapter(
+          child: ElevatedButton(
+            child: const Text("Remove Item"),
+            onPressed: () {
+              listKey.currentState?.removeItem(notesManager.notes.length - 1, (
+                context,
+                animation,
+              ) {
+                return CRTAnimation(
+                    animation: CurvedAnimation(
+                        parent: animation, curve: Curves.easeInOut),
+                    child: NotePreview(
+                      title: notesManager.notes
+                          .elementAt(notesManager.notes.length - 1)
+                          .title,
+                    ));
+              }, duration: const Duration(milliseconds: 400));
+              Future.delayed(const Duration(milliseconds: 500), () {
+                notesManager.notes.removeAt(notesManager.notes.length - 1);
+              });
+            },
+          ),
+        )
+      ],
     );
   }
 }

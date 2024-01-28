@@ -10,9 +10,7 @@ class NotesManager extends ChangeNotifier {
   Database? _database;
 
   NotesManager() {
-    _initializeDB().then((_) {
-      _loadNotesFromDB();
-    });
+    _initializeDB();
   }
 
   Future<void> _initializeDB() async {
@@ -36,9 +34,15 @@ class NotesManager extends ChangeNotifier {
     });
   }
 
-  Future<void> _loadNotesFromDB() async {
+  Future<void> loadNotesFromDB() async {
+    if (_database == null) {
+      print("Database is not initialized.");
+      return;
+    }
     final List<Map<String, dynamic>> maps = await _database!.query('notes');
+    print("called");
     _notes = maps.map((map) => Note.fromMap(map)).toList();
+    print(_notes);
     notifyListeners();
   }
 
