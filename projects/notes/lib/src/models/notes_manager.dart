@@ -36,7 +36,6 @@ class NotesManager extends ChangeNotifier {
 
   Future<void> loadNotesFromDB() async {
     if (_database == null) {
-      print("Database is not initialized.");
       return;
     }
     final List<Map<String, dynamic>> maps = await _database!.query('notes');
