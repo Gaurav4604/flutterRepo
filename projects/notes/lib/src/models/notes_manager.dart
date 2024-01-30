@@ -39,7 +39,6 @@ class NotesManager extends ChangeNotifier {
       return;
     }
     final List<Map<String, dynamic>> maps = await _database!.query('notes');
-    print("called");
     _notes = maps.map((map) => Note.fromMap(map)).toList();
     print(_notes);
     notifyListeners();
