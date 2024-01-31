@@ -9,11 +9,7 @@ class NotesManager extends ChangeNotifier {
   List<Note> _notes = [];
   Database? _database;
 
-  NotesManager() {
-    _initializeDB();
-  }
-
-  Future<void> _initializeDB() async {
+  Future<void> initializeDB() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'notes_database.db');
 
@@ -40,14 +36,17 @@ class NotesManager extends ChangeNotifier {
     }
     final List<Map<String, dynamic>> maps = await _database!.query('notes');
     _notes = maps.map((map) => Note.fromMap(map)).toList();
-    print(_notes);
     notifyListeners();
   }
 
   Future<void> addNote(Note note) async {
-    await _database!.insert('notes', note.toMap());
-    _notes.add(note);
-    notifyListeners();
+    if (_database != null) {
+      await _database!.insert('notes', note.toMap());
+      _notes.add(note);
+      notifyListeners();
+    } else {
+      return;
+    }
   }
 
   Future<void> updateNote(String noteId, Note updatedNote) async {

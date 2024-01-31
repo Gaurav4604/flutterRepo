@@ -58,28 +58,29 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   final GlobalKey<SliverAnimatedGridState> listKey =
       GlobalKey<SliverAnimatedGridState>();
-  late Future<void> _loadNotesFuture;
+
+  Future<void>? _loadNotesFuture;
 
   @override
   void initState() {
     super.initState();
     final notesManager = Provider.of<NotesManager>(context, listen: false);
-    _loadNotesFuture =
-        notesManager.loadNotesFromDB(); // Initialize the future here
+    _loadNotesFuture = notesManager
+        .initializeDB()
+        .then((value) => notesManager.loadNotesFromDB());
   }
 
   @override
   Widget build(BuildContext context) {
-    final notesManager = Provider.of<NotesManager>(context);
+    final notesManager = Provider.of<NotesManager>(context, listen: false);
     return Scaffold(
       body: FutureBuilder(
           future: _loadNotesFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              print(notesManager.notes);
-              return _buildNotesGrid(context);
+              return _buildNotesGrid(context, notesManager);
             } else {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
           }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -97,13 +98,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  CustomScrollView _buildNotesGrid(BuildContext context) {
-    final notesManager = Provider.of<NotesManager>(context);
-
+  CustomScrollView _buildNotesGrid(
+      BuildContext context, NotesManager notesManager) {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          title: const Text("Home"),
+          title: const Text("Notes"),
           surfaceTintColor: Colors.transparent,
           backgroundColor: Theme.of(context).colorScheme.background,
         ),
@@ -149,8 +149,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           .title,
                     ));
               }, duration: const Duration(milliseconds: 400));
-              Future.delayed(const Duration(milliseconds: 500), () {
-                notesManager.notes.removeAt(notesManager.notes.length - 1);
+              Future.delayed(const Duration(milliseconds: 500), () async {
+                await notesManager
+                    .deleteNote("id_${notesManager.notes.length}");
               });
             },
           ),
